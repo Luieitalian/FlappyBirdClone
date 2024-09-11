@@ -20,7 +20,7 @@ public class Bound : MonoBehaviour
     {
         if (collider2D.CompareTag("Player"))
         {
-            print("Trigger!");
+            print("Player hit world bounds!");
         }
     }
 }

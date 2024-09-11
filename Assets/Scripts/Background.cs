@@ -8,11 +8,33 @@ public class Background : MonoBehaviour
     [SerializeField]
     private RawImage image;
     [SerializeField]
-    private float speed;
+    private float backgroundSpeed;
+    [SerializeField]
+    private GameObject pipeGroup;
+    [SerializeField]
+    private float spawnOffsetX;
+    private float spawnOffsetY;
+    private readonly float spawnOffsetYRange = 1;
+    [SerializeField]
+    private float spawnDelay;
+    [SerializeField]
+    private float cameraOffsetZ;
 
-    // Update is called once per frame
+    void Start()
+    {
+        SpawnPipes();
+    }
+
     void Update()
     {
-        image.uvRect = new Rect(image.uvRect.position + new Vector2(speed, 0) * Time.deltaTime, image.uvRect.size);
+        image.uvRect = new Rect(image.uvRect.position + new Vector2(backgroundSpeed, 0) * Time.deltaTime, image.uvRect.size);
+    }
+
+    void SpawnPipes()
+    {
+        spawnOffsetY = Random.Range(-spawnOffsetYRange, spawnOffsetYRange);
+        var newPipeGroup = Instantiate(pipeGroup, new Vector3(spawnOffsetX, spawnOffsetY, cameraOffsetZ), Quaternion.identity, gameObject.transform);
+        newPipeGroup.transform.SetAsFirstSibling();
+        Invoke(nameof(SpawnPipes), spawnDelay);
     }
 }

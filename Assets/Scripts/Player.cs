@@ -1,15 +1,21 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
     [SerializeField]
-    private float jumpPower = 30f;
+    private GameManager gameManager;
     [SerializeField]
+    private float jumpPower = 4f;
+    [SerializeField]
+    private float rotationPower = 4f;
     private Rigidbody2D rb2D;
 
     private bool jumpRequested;
+
+    void Start() { rb2D = GetComponent<Rigidbody2D>(); }
 
     // Update is called once per frame
     void Update()
@@ -24,8 +30,22 @@ public class Player : MonoBehaviour
     {
         if (jumpRequested)
         {
-            rb2D.AddRelativeForce(jumpPower * Time.fixedDeltaTime * Vector2.up, ForceMode2D.Impulse);
+            rb2D.AddForce(jumpPower * Vector2.up, ForceMode2D.Impulse);
             jumpRequested = false;
+        }
+
+        transform.rotation = Quaternion.Euler(0, 0, rb2D.velocity.y * rotationPower);
+    }
+
+    void OnTriggerEnter2D(Collider2D collider)
+    {
+        if (collider.CompareTag("Pipe"))
+        {
+            SceneManager.LoadScene(0);
+        }
+        else if (collider.CompareTag("PointTrigger"))
+        {
+            gameManager.AddPoint(1);
         }
     }
 }
