@@ -41,7 +41,7 @@ public class Player : MonoBehaviour
     {
         if (collider.CompareTag("Pipe"))
         {
-            SceneManager.LoadScene(0);
+            gameManager.KillPlayer(this);
         }
         else if (collider.CompareTag("PointTrigger"))
         {

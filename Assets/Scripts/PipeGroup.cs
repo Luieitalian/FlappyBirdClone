@@ -13,7 +13,7 @@ public class PipeGroup : MonoBehaviour
     {
         rb2D = GetComponent<Rigidbody2D>();
         rb2D.velocity = new Vector2(-speed, 0);
-        Invoke(nameof(Kill), speed / 0.2f);
+        Invoke(nameof(Kill), speed / 0.5f);
     }
 
     void Kill()

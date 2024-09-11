@@ -14,8 +14,6 @@ public class WorldBounds : MonoBehaviour
     [SerializeField]
     private float xOffset, yOffset;
 
-    private
-    // Start is called before the first frame update
     void Start()
     {
         topCollider = transform.Find("Top").GetComponent<BoxCollider2D>();

@@ -19,22 +19,31 @@ public class Background : MonoBehaviour
     private float spawnDelay;
     [SerializeField]
     private float cameraOffsetZ;
-
-    void Start()
-    {
-        SpawnPipes();
-    }
+    [SerializeField]
+    private GameManager gameManager;
 
     void Update()
     {
         image.uvRect = new Rect(image.uvRect.position + new Vector2(backgroundSpeed, 0) * Time.deltaTime, image.uvRect.size);
     }
 
-    void SpawnPipes()
+    IEnumerator SpawnPipes()
     {
-        spawnOffsetY = Random.Range(-spawnOffsetYRange, spawnOffsetYRange);
-        var newPipeGroup = Instantiate(pipeGroup, new Vector3(spawnOffsetX, spawnOffsetY, cameraOffsetZ), Quaternion.identity, gameObject.transform);
-        newPipeGroup.transform.SetAsFirstSibling();
-        Invoke(nameof(SpawnPipes), spawnDelay);
+        while (true)
+        {
+            spawnOffsetY = Random.Range(-spawnOffsetYRange, spawnOffsetYRange);
+            Instantiate(pipeGroup, new Vector3(spawnOffsetX, spawnOffsetY, cameraOffsetZ), Quaternion.identity, gameObject.transform);
+            yield return new WaitForSeconds(spawnDelay);
+        }
+    }
+
+    void OnEnable()
+    {
+        StartCoroutine(SpawnPipes());
+    }
+
+    void OnDisable()
+    {
+        StopCoroutine(SpawnPipes());
     }
 }
