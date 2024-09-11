@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Bound : MonoBehaviour
 {
+    [SerializeField]
+    private GameManager gameManager;
     // Start is called before the first frame update
     void Start()
     {
@@ -21,6 +23,7 @@ public class Bound : MonoBehaviour
         if (collider2D.CompareTag("Player"))
         {
             print("Player hit world bounds!");
+            gameManager.KillPlayer();
         }
     }
 }

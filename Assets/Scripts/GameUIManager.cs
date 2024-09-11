@@ -5,11 +5,18 @@ using UnityEngine;
 public class GameUIManager : MonoBehaviour
 {
 
-    void Awake()
+    void OnEnable()
     {
         var player = transform.Find("Player").gameObject;
-        var playerRect = player.transform.GetComponent<RectTransform>().rect;
-        playerRect.position = new Vector3(-290, 0);
+        var playerRectTransform = player.transform.GetComponent<RectTransform>();
+        playerRectTransform.anchoredPosition = new Vector3(173, 0);
+    }
+
+    void OnDisable()
+    {
+        var player = transform.Find("Player").gameObject;
+        var playerRectTransform = player.transform.GetComponent<RectTransform>();
+        playerRectTransform.anchoredPosition = new Vector3(173, 0);
     }
 
 }

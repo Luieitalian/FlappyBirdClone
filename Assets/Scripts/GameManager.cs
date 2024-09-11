@@ -21,6 +21,7 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
+        Application.targetFrameRate = 60;
     }
 
     void UpdateGameUI()
@@ -42,10 +43,12 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void KillPlayer(Player player)
+    public void KillPlayer()
     {
         if (points > highestScore) highestScore = points;
+
         points = 0;
+        UpdateGameUI();
 
         UpdateMenuUI();
         DeleteAllPipes();
